@@ -12,6 +12,20 @@ and a per-world **gamemode policy** that fixes the classic "left in Creative, re
 
 ប្រើបានតាមពាក្យបញ្ជា `/gq` ឬតាម **GUI ស្អាត** (មិនចាំបាច់ teleport ដើម្បីប្ដូរ world)។
 
+**EN — beyond the per-world toggles, the plugin also ships a full builder toolbox:**
+- 🌍 **World Manager** — create and manage worlds from a GUI, backed by Multiverse-Core (presets,
+  an advanced wizard with a live preview, and one-click teleport). See *World Manager* below.
+- 🎯 **Builder Reach** — change your arm length so you can place/break blocks from farther away.
+- 💡 **Light Levels** — grab a light block at any brightness (0-15) for lighting interiors.
+- 🧰 **Operator Items** — get the blocks that normally need `/give` (command blocks, barriers…).
+
+**ខ្មែរ — បន្ថែមលើ toggle តាម world, plugin នេះក៏មាន "ប្រអប់ឧបករណ៍" ពេញលេញសម្រាប់អ្នកសាងសង់ផងដែរ៖**
+- 🌍 **World Manager** — បង្កើត និងគ្រប់គ្រង world តាមរយៈ GUI ដោយពឹងលើ Multiverse-Core (មាន preset,
+  wizard កម្រិតខ្ពស់ដែលបង្ហាញលទ្ធផលជាមុន, និង teleport តែមួយចុច)។ មើលផ្នែក *World Manager* ខាងក្រោម។
+- 🎯 **Builder Reach** — ប្ដូរប្រវែងដៃ ដើម្បីដាក់/កាច់ block ពីចម្ងាយឆ្ងាយជាងធម្មតា។
+- 💡 **Light Levels** — យក light block តាមកម្រិតពន្លឺ (0-15) សម្រាប់បំភ្លឺខាងក្នុងសំណង់។
+- 🧰 **Operator Items** — យក block ដែលធម្មតាត្រូវការ `/give` (command block, barrier ។ល។)។
+
 ---
 
 ## 📦 Installation / ការដំឡើង
@@ -21,10 +35,17 @@ and a per-world **gamemode policy** that fixes the classic "left in Creative, re
 2. Drop `goldeniq-builder-tool-<version>.jar` into your server's `plugins/` folder.
 3. Restart the server. Config files are generated under `plugins/GOLDENIQ-BUILDER-TOOL/`.
 
+> **Optional dependencies:** **Multiverse-Core** (for the World Manager) and **LuckPerms** (recommended
+> for Build Protection exemptions). Both are *soft* — the plugin runs fine without them; the matching
+> feature simply tells you it needs them.
+
 **ខ្មែរ**
 1. Build យក jar (មើលផ្នែក *Build* ខាងក្រោម) ឬប្រើ jar ដែលមានស្រាប់។
 2. ដាក់ `goldeniq-builder-tool-<version>.jar` ចូលក្នុងថត `plugins/` របស់ server។
 3. Restart server។ ឯកសារ config នឹងបង្កើតនៅ `plugins/GOLDENIQ-BUILDER-TOOL/`។
+
+> **Dependency ជាជម្រើស៖** **Multiverse-Core** (សម្រាប់ World Manager) និង **LuckPerms** (ណែនាំសម្រាប់ការលើកលែង
+> Build Protection)។ ទាំងពីរជា *soft* — plugin ដំណើរការធម្មតាបើគ្មានវា; មុខងារពាក់ព័ន្ធគ្រាន់តែប្រាប់ថាត្រូវការវា។
 
 ---
 
@@ -32,9 +53,21 @@ and a per-world **gamemode policy** that fixes the classic "left in Creative, re
 
 | Node | Default | EN | ខ្មែរ |
 |---|---|---|---|
-| `goldeniq.builder.use` | op | Use the GUI and all per-world toggles | ប្រើ GUI និង toggle ទាំងអស់ |
+| `goldeniq.builder.use` | op | Use the GUI and all per-world toggles; open Lights/Op-Items | ប្រើ GUI និង toggle ទាំងអស់; បើក Lights/Op-Items |
 | `goldeniq.builder.admin` | op | Gamemode policy, `/gq copy`, `/gq reload` | គោលការណ៍ gamemode, copy, reload |
 | `goldeniq.builder.gamemode.bypass` | op | Ignore `FORCED + lock` gamemode | មិនជាប់ការ lock gamemode |
+| `goldeniq.builder.reach` | op | Change your own builder reach (arm length) | ប្ដូរ reach (ប្រវែងដៃ) របស់ខ្លួនឯង |
+| `goldeniq.world.use` | op | Open the World Manager and teleport to worlds | បើក World Manager និង teleport ទៅ world |
+| `goldeniq.world.admin` | op | Create, delete and edit worlds | បង្កើត, លុប និងកែ world |
+| `goldeniq.guard.export` | **false** | May run build-export commands (the exemption an admin grants). **OP does NOT get this** | អនុញ្ញាតប្រើ command export build (ការលើកលែងដែល admin ផ្ដល់)។ **OP មិនបាន** |
+| `goldeniq.guard.admin` | **false** | Open & manage Build Protection. **OP does NOT get this** | បើក និងគ្រប់គ្រង Build Protection។ **OP មិនបាន** |
+| `goldeniq.guard.mod.bypass` | **false** | Exempt from client-mod detection/kick. **OP does NOT get this** | លើកលែងពីការ detect/kick mod។ **OP មិនបាន** |
+
+> **EN:** The three `goldeniq.guard.*` nodes are `default: false` on purpose — **even operators do not
+> get them**. Only an explicit grant (a LuckPerms node) opens them, so build-export stays locked to
+> the senior admin who works from the server panel/console.
+> **ខ្មែរ:** node `goldeniq.guard.*` ទាំង ៣ មាន `default: false` ដោយចេតនា — **សូម្បីតែ OP ក៏មិនបាន**។ មានតែការផ្ដល់
+> ផ្ទាល់ (node LuckPerms) ទើបបើកវា ដូច្នេះការ export build នៅជាប់សោសម្រាប់តែ admin ជាន់ខ្ពស់ដែលធ្វើការពី panel/console។
 
 ---
 
@@ -121,6 +154,13 @@ and a per-world **gamemode policy** that fixes the classic "left in Creative, re
   without placing light. (Session-scoped.)
 - **ខ្មែរ:** បើក/បិទ night vision អចិន្ត្រៃយ៍សម្រាប់ **ខ្លួនអ្នក** — ល្អសម្រាប់សង់ក្នុងរូងភ្នំ ឬខាងក្នុង ដោយមិនចាំបាច់ដាក់ភ្លើង។
 
+### `/gq reach [<number> | reset]`
+- **EN:** Changes **your** builder reach (arm length) so you can place and break blocks from farther
+  away. With no argument it opens the reach menu; a number sets the distance (clamped to the configured
+  max, default 64); `reset` returns to vanilla. Per-player and saved. Needs `goldeniq.builder.reach`.
+- **ខ្មែរ:** ប្ដូរ reach (ប្រវែងដៃ) របស់ **អ្នក** ដើម្បីដាក់ និងកាច់ block ពីចម្ងាយឆ្ងាយជាងធម្មតា។ បើគ្មាន argument វាបើកម៉ឺនុយ reach;
+  លេខកំណត់ចម្ងាយ (កំណត់ត្រឹមអតិបរមាក្នុង config, លំនាំដើម 64); `reset` ត្រឡប់ទៅធម្មតាវិញ។ កំណត់តាមអ្នកលេង និងរក្សាទុក។ ត្រូវការ `goldeniq.builder.reach`។
+
 ### `/gq status`
 - **EN:** Prints a summary of the current world's active protections to chat.
 - **ខ្មែរ:** បង្ហាញសេចក្ដីសង្ខេបនៃ protection ដែលកំពុងបើកក្នុង world បច្ចុប្បន្នទៅក្នុង chat។
@@ -146,10 +186,134 @@ and a per-world **gamemode policy** that fixes the classic "left in Creative, re
 - **EN:** Reloads `config.yml` + `worlds.yml` and re-applies everything.
 - **ខ្មែរ:** ផ្ទុក `config.yml` + `worlds.yml` ឡើងវិញ ហើយអនុវត្តគ្រប់យ៉ាងម្ដងទៀត។
 
+### `/gq guard` *(guard.admin)*
+- **EN:** With no argument, opens the **Build Protection** menu. `/gq guard export [on|off]` and
+  `/gq guard mods [on|off]` toggle the two guards (no argument flips). `/gq guard exempt <player>
+  [on|off]` grants/revokes that player's `goldeniq.guard.export` (the export exemption), and
+  `/gq guard modbypass <player> [on|off]` does the same for `goldeniq.guard.mod.bypass`. Exemption
+  changes are written directly to **LuckPerms** (required for that sub-command); without LuckPerms,
+  grant the node with your permission plugin instead. Needs `goldeniq.guard.admin`.
+- **ខ្មែរ:** បើគ្មាន argument បើកម៉ឺនុយ **Build Protection**។ `/gq guard export [on|off]` និង
+  `/gq guard mods [on|off]` ប្ដូរ guard ទាំងពីរ (គ្មាន argument = ប្ដូរស្ថានភាព)។ `/gq guard exempt <player>
+  [on|off]` ផ្ដល់/ដក `goldeniq.guard.export` (ការលើកលែង export) ឱ្យអ្នកលេងនោះ, ហើយ `/gq guard modbypass
+  <player> [on|off]` ធ្វើដូចគ្នាសម្រាប់ `goldeniq.guard.mod.bypass`។ ការផ្លាស់ប្ដូរការលើកលែងសរសេរទៅ **LuckPerms**
+  ផ្ទាល់ (ត្រូវការ LuckPerms សម្រាប់ sub-command នេះ); បើគ្មាន LuckPerms ផ្ដល់ node តាម permission plugin ជំនួសវិញ។
+  ត្រូវការ `goldeniq.guard.admin`។
+
 ### `/gq help`
 - **EN / ខ្មែរ:** Shows the command list / បង្ហាញបញ្ជីពាក្យបញ្ជា។
 
 > Aliases / ឈ្មោះក្រៅ: `/builder`, `/goldeniq` = `/gq`. Tab-completion is supported at every position.
+
+### `/world [create]` *(world.use / world.admin)*
+- **EN:** Opens the **World Manager** (needs `goldeniq.world.use`). `/world create` jumps straight to
+  the creation hub (needs `goldeniq.world.admin`). Aliases: `/worlds`, `/wm`. Requires Multiverse-Core.
+  See *World Manager* below.
+- **ខ្មែរ:** បើក **World Manager** (ត្រូវការ `goldeniq.world.use`)។ `/world create` ចូលផ្ទាំងបង្កើតផ្ទាល់ (ត្រូវការ `goldeniq.world.admin`)។
+  ឈ្មោះក្រៅ៖ `/worlds`, `/wm`។ ត្រូវការ Multiverse-Core។ មើលផ្នែក *World Manager* ខាងក្រោម។
+
+### `/light` *(alias `/lights`)*
+- **EN:** Opens the **Light Levels** selector — click a level (0-15) to get a light block at that
+  brightness. Perfect for lighting interiors invisibly. Needs `goldeniq.builder.use`.
+- **ខ្មែរ:** បើកម៉ឺនុយ **Light Levels** — ចុចកម្រិតមួយ (0-15) ដើម្បីយក light block តាមកម្រិតពន្លឺនោះ។ ល្អសម្រាប់បំភ្លឺខាងក្នុង
+  ដោយមើលមិនឃើញ light block។ ត្រូវការ `goldeniq.builder.use`។
+
+### `/items` *(alias `/opitems`)*
+- **EN:** Opens the **Operator Items** menu — click to receive one of the blocks that normally need
+  `/give` (command blocks, barriers, structure/jigsaw blocks, light, etc.). Needs `goldeniq.builder.use`.
+- **ខ្មែរ:** បើកម៉ឺនុយ **Operator Items** — ចុចដើម្បីទទួល block ដែលធម្មតាត្រូវការ `/give` (command block, barrier,
+  structure/jigsaw block, light ។ល។)។ ត្រូវការ `goldeniq.builder.use`។
+
+---
+
+## 🌍 World Manager / កម្មវិធីគ្រប់គ្រង World
+
+**EN:** A GUI for creating and managing worlds without touching `/mv` commands or config files. It is
+powered by **Multiverse-Core** (soft dependency) — if Multiverse is not installed, the World Manager
+simply tells you it is required and everything else keeps working. Open it from `/world` or the
+**World Manager** button on the `/gq` panel.
+
+- **Create — Presets:** one click + a name gives you a ready-made world: *Flat Creative*, *Void*,
+  *Normal Survival*, *Nether*, *The End*.
+- **Create — Advanced wizard:** a single screen with a **live preview** at the top that updates as you
+  change each option — environment (Normal/Nether/The End), world type (Normal/Flat/Large Biomes/
+  Amplified), seed, generate-structures, difficulty, generator, alias, icon, gamemode, and a reserved
+  *Private* flag. Press **Create** (it only lights up once the name is valid).
+- **Manage:** every world is a clickable icon; opening one gives a detail menu with a one-click
+  **Teleport** to its spawn (it loads the world first if needed).
+- **Names** type through chat (Bedrock-friendly). World gamemode is enforced by the plugin's own
+  gamemode policy, so it never fights Multiverse.
+
+> Permissions: opening + teleport need `goldeniq.world.use`; creating needs `goldeniq.world.admin`.
+
+**ខ្មែរ:** ម៉ឺនុយ GUI សម្រាប់បង្កើត និងគ្រប់គ្រង world ដោយមិនចាំបាច់ប្រើពាក្យបញ្ជា `/mv` ឬកែ config ឡើយ។ វាដំណើរការ
+ដោយពឹងលើ **Multiverse-Core** (soft dependency) — បើគ្មាន Multiverse ដំឡើង World Manager គ្រាន់តែប្រាប់ថា
+ត្រូវការវា ហើយមុខងារផ្សេងទៀតនៅដំណើរការធម្មតា។ បើកវាពី `/world` ឬប៊ូតុង **World Manager** ក្នុងផ្ទាំង `/gq`។
+
+- **បង្កើត — Presets៖** ចុចមួយ + វាយឈ្មោះ គឺបាន​ world ស្រេច៖ *Flat Creative*, *Void*, *Normal Survival*,
+  *Nether*, *The End*។
+- **បង្កើត — Advanced wizard៖** ផ្ទាំងតែមួយដែលមាន **preview បង្ហាញផ្ទាល់** នៅខាងលើ ដែលផ្លាស់ប្ដូរតាមពេលអ្នកកែ
+  ជម្រើសនីមួយៗ — environment (Normal/Nether/The End), world type (Normal/Flat/Large Biomes/Amplified),
+  seed, generate-structures, difficulty, generator, alias, icon, gamemode, និង flag *Private* ដែលទុកសម្រាប់ពេលក្រោយ។
+  ចុច **Create** (វាភ្លឺតែពេលឈ្មោះត្រឹមត្រូវ)។
+- **គ្រប់គ្រង៖** world នីមួយៗជា icon ដែលចុចបាន; ពេលបើកវាមានម៉ឺនុយលម្អិត ព្រមទាំងប៊ូតុង **Teleport** តែមួយចុចទៅ
+  spawn របស់វា (បើ world មិនទាន់ load វា load ជាមុនសិន)។
+- **ឈ្មោះ** វាយតាម chat (ស្រួលសម្រាប់ Bedrock)។ gamemode របស់ world ត្រូវបានគ្រប់គ្រងដោយ gamemode policy
+  របស់ plugin ខ្លួនឯង ដូច្នេះវាមិនច្បាំងជាមួយ Multiverse ឡើយ។
+
+> សិទ្ធិ៖ ការបើក + teleport ត្រូវការ `goldeniq.world.use`; ការបង្កើតត្រូវការ `goldeniq.world.admin`។
+
+---
+
+## 🛡️ Build Protection / ការការពារសំណង់
+
+**EN:** On a collaborative builder server a build is shared property. **Build Protection** stops a
+builder from **exporting a build out of the server** without going through an admin. Open it from the
+**Build Protection** button on the `/gq` panel (visible only to `goldeniq.guard.admin`). It has two
+layers:
+
+- **Export Guard (Tier 1 — fully closable):** intercepts WorldEdit / FastAsyncWorldEdit export
+  commands *before* they run and **cancels** them for anyone without `goldeniq.guard.export`. Blocked:
+  `//schem save | share | download | load | list | delete | …`, the standalone `//download`,
+  CraftScript (`/cs`, `/.s`, `.`), and `//anvil` / region-to-file — including every aliased form
+  (`worldedit:`, `fawe:`, `//`, casing, extra spaces are all normalized). **Allowed:** all normal
+  building commands (`//copy`, `//paste`, `//set`, `//brush`, …) and `//listchunks` — the sanctioned
+  "ask an admin to export" tool (it exports nothing; the builder reports the region, the admin pulls
+  the files from the panel).
+- **Mod Guard (Tier 2 — honest limit):** on join (and on live channel registration) it detects and
+  **kicks** clients announcing known build-theft mods via plugin channels (World Downloader,
+  Schematica) unless they hold `goldeniq.guard.mod.bypass`. An optional `brand-policy` can warn on or
+  kick non-`vanilla` client brands (off by default; brands are spoofable). The
+  `wdl-disable-handshake` flag is **reserved/experimental** — detection + kick is the active
+  mechanism. It **cannot** detect passive mods that announce nothing (Litematica, minimaps,
+  screenshots) — no server-side plugin can. Treat that residual risk with policy, not the plugin.
+
+**The server console / web panel is never gated**, so a senior admin exports freely from the panel
+with zero setup. Exemptions are granted per-player through permissions (LuckPerms recommended; the
+guard nodes are `default: false`, so a grant is the only way in). Blocked attempts are written to an
+audit log and alerted to online admins.
+
+**ខ្មែរ:** នៅលើ builder server ដែលធ្វើការរួមគ្នា សំណង់គឺជាកម្មសិទ្ធិរួម។ **Build Protection** ទប់ស្កាត់អ្នកសាងសង់ពីការ
+**នាំសំណង់ចេញក្រៅ server** ដោយមិនឆ្លងកាត់ admin។ បើកវាពីប៊ូតុង **Build Protection** ក្នុងផ្ទាំង `/gq`
+(មើលឃើញតែអ្នកមាន `goldeniq.guard.admin`)។ វាមាន ២ ស្រទាប់៖
+
+- **Export Guard (ស្រទាប់ ១ — បិទបាន ១០០%)៖** ស្ទាក់ command export របស់ WorldEdit / FastAsyncWorldEdit
+  *មុនពេលវាដំណើរការ* ហើយ **បោះបង់** វាសម្រាប់អ្នកដែលគ្មាន `goldeniq.guard.export`។ ត្រូវបានបិទ៖
+  `//schem save | share | download | load | list | delete | …`, `//download`, CraftScript (`/cs`, `/.s`, `.`),
+  និង `//anvil` / region-to-file — រួមទាំងគ្រប់ទម្រង់ alias (`worldedit:`, `fawe:`, `//`, អក្សរធំ/តូច, ដកឃ្លាលើស ត្រូវបាន
+  normalize ទាំងអស់)។ **អនុញ្ញាត៖** គ្រប់ command សាងសង់ធម្មតា (`//copy`, `//paste`, `//set`, `//brush`, …)
+  និង `//listchunks` — ឧបករណ៍ "សុំ admin export" ស្របច្បាប់ (វាមិន export អ្វីទេ; អ្នកសាងសង់ប្រាប់ region ហើយ admin
+  ទាញ file ពី panel)។
+- **Mod Guard (ស្រទាប់ ២ — ដែនកំណត់ត្រង់ៗ)៖** ពេលចូល (និងពេល register channel) វា detect និង **kick** client
+  ដែលប្រកាសខ្លួនថាមាន mod លួចសំណង់ស្គាល់ (World Downloader, Schematica) លុះត្រាមាន `goldeniq.guard.mod.bypass`។
+  `brand-policy` ជាជម្រើសអាច warn ឬ kick client brand មិនមែន `vanilla` (default បិទ; brand អាចក្លែងបាន)។ flag
+  `wdl-disable-handshake` គឺ **reserved/experimental** — detection + kick ជាយន្តការសកម្ម។ វា **មិនអាច** detect
+  mod អកម្មដែលមិនប្រកាសអ្វី (Litematica, minimap, screenshot) ទេ — គ្មាន plugin ខាង server ណាធ្វើបានឡើយ។
+  ហានិភ័យសល់នោះត្រូវដោះស្រាយដោយគោលនយោបាយ មិនមែនដោយ plugin។
+
+**Console / web panel មិនត្រូវបាន gate ឡើយ** ដូច្នេះ admin ជាន់ខ្ពស់ export ដោយសេរីពី panel ដោយមិនចាំបាច់រៀបចំអ្វី។
+ការលើកលែងផ្ដល់តាមអ្នកលេងតាមរយៈ permission (ណែនាំ LuckPerms; guard nodes ជា `default: false` ដូច្នេះការផ្ដល់គឺជាផ្លូវតែមួយ)។
+ការប៉ុនប៉ងដែលត្រូវបានបិទ ត្រូវកត់ទុកក្នុង audit log និងជូនដំណឹងទៅ admin ដែល online។
 
 ---
 
@@ -161,6 +325,9 @@ and a per-world **gamemode policy** that fixes the classic "left in Creative, re
 - **Gamemode Policy** button: click to cycle REMEMBER → FORCED(SURVIVAL→CREATIVE→ADVENTURE→SPECTATOR).
 - **Gamemode Lock** button (next to it): click to lock/unlock manual changes (used when FORCED).
 - **Clear Mobs**, **Night Vision**, **Status** are action buttons.
+- **Operator Items**, **Light Levels**, **Builder Reach** and **World Manager** open their own sub-menus
+  (the same as `/items`, `/light`, `/gq reach` and `/world`).
+- **Build Protection** opens the export/mod guard menu — shown only to `goldeniq.guard.admin` holders.
 - **<< Previous World** / **Next World >>** switch to the previous/next loaded world **without teleporting**. **Done** closes the menu.
 - Items can't be taken out — every click is handled by the plugin.
 - Everything works with **plain left-clicks** (no shift-click required), so it behaves the same for Bedrock players.
@@ -171,6 +338,9 @@ and a per-world **gamemode policy** that fixes the classic "left in Creative, re
 - ប៊ូតុង **Gamemode Policy**៖ ចុចដើម្បីប្ដូរវដ្ដ REMEMBER → FORCED(SURVIVAL→CREATIVE→ADVENTURE→SPECTATOR)។
 - ប៊ូតុង **Gamemode Lock** (ក្បែរវា)៖ ចុចដើម្បី lock/unlock ការប្ដូរដោយដៃ (ប្រើពេល FORCED)។
 - **Clear Mobs**, **Night Vision**, **Status** ជាប៊ូតុងសកម្មភាព។
+- **Operator Items**, **Light Levels**, **Builder Reach** និង **World Manager** បើកម៉ឺនុយរងរៀងៗខ្លួន
+  (ដូចគ្នានឹង `/items`, `/light`, `/gq reach` និង `/world`)។
+- **Build Protection** បើកម៉ឺនុយ guard (export/mod) — បង្ហាញតែអ្នកមាន `goldeniq.guard.admin`។
 - **<< Previous World** / **Next World >>** ប្ដូរទៅ world មុន/បន្ទាប់ **ដោយមិនចាំបាច់ teleport**។ **Done** បិទម៉ឺនុយ។
 - មិនអាចយក items ចេញបានទេ — រាល់ការចុចត្រូវបានដោះស្រាយដោយ plugin។
 - គ្រប់យ៉ាងដំណើរការដោយ **ចុចឆ្វេងធម្មតា** (មិនត្រូវការ shift-click) ដូច្នេះវាដូចគ្នាសម្រាប់អ្នកលេង Bedrock។
@@ -206,10 +376,14 @@ after** join/world-change.
 
 ## ⚙️ Configuration / ការកំណត់
 
-**EN:** Global options and the default toggle template live in `config.yml`. Per-world state is saved in
-`worlds.yml`. Per-player remembered gamemodes are in `playerdata/<uuid>.yml`.
-**ខ្មែរ:** ជម្រើសសកល និង template លំនាំដើម នៅក្នុង `config.yml`។ ស្ថានភាពតាម world នៅ `worlds.yml`។
-gamemode ដែលចងចាំតាមអ្នកលេង នៅ `playerdata/<uuid>.yml`។
+**EN:** Global options and the default toggle template live in `config.yml`. Per-world toggle state is
+in `worlds.yml`; world icons/private flags in `managed-worlds.yml`; per-player reach in `reach.yml`;
+remembered gamemodes in `playerdata/<uuid>.yml`; blocked export/mod attempts in `guard-audit.log`.
+`/gq reload` re-reads `config.yml` + `worlds.yml`.
+**ខ្មែរ:** ជម្រើសសកល និង template លំនាំដើម នៅ `config.yml`។ ស្ថានភាព toggle តាម world នៅ `worlds.yml`;
+icon/flag private របស់ world នៅ `managed-worlds.yml`; reach តាមអ្នកលេង នៅ `reach.yml`;
+gamemode ដែលចងចាំ នៅ `playerdata/<uuid>.yml`; ការប៉ុនប៉ង export/mod ដែលបិទ នៅ `guard-audit.log`។
+`/gq reload` ផ្ទុក `config.yml` + `worlds.yml` ឡើងវិញ។
 
 ```yaml
 debug: false
@@ -232,6 +406,26 @@ defaults:                   # template for worlds without an explicit entry
     policy: REMEMBER          # REMEMBER or FORCED
     forced: CREATIVE          # used only when policy is FORCED
     lock: false
+
+reach:                        # Builder reach (arm length), per-player
+  enabled: true               # master switch for the whole feature
+  max-value: 64               # admin cap (vanilla hard max 64); higher requests are clamped
+
+guard:                        # Build Protection (see section above)
+  export:
+    enabled: true
+    op-bypass: false          # OP never bypasses; this is an extra escape hatch only
+    deny-message: "&cExporting builds is locked. Ask an admin to export for you."
+    log: true
+    custom-blocklist: []      # extra normalized command roots to block
+  mods:
+    enabled: true
+    check-delay-ticks: 40     # delay after join before checking plugin channels
+    kick-message: "&cRemove the &e%mod% &cmod, then rejoin."
+    wdl-disable-handshake: false  # enable after verifying the WDL control-packet layout
+    brand-policy: OFF             # OFF | WARN | KICK_NON_VANILLA
+    blocked-channels: ["wdl:init", "wdl:control", "wdl:request",
+                       "WDL|INIT", "WDL|CONTROL", "WDL|REQUEST", "schematica"]
 ```
 
 ---
@@ -255,10 +449,12 @@ mvn clean package
 
 ## 🗂️ Project layout / រចនាសម្ព័ន្ធគម្រោង
 
-- `settings/` — config & persistence (`WorldSettings`, `WorldSettingsManager`, `GamemodePolicy`, `PlayerGamemodeStore`)
-- `feature/` — one service/listener per feature (hot-path listeners do an O(1) cache lookup and return early)
-- `command/` — `/gq` executor + tab completer (pure parsing helpers are unit-tested)
-- `gui/` — the 54-slot control panel
+- `settings/` — config & persistence (`WorldSettings`, `WorldSettingsManager`, `GamemodePolicy`, `PlayerGamemodeStore`, `ReachStore`)
+- `feature/` — one service/listener per feature (hot-path listeners do an O(1) cache lookup and return early); also reach control
+- `world/` — World Manager: `MultiverseBridge` (the only class touching Multiverse-Core), `WorldSpec`, `WorldPreset`, `ManagedWorldStore` and the result records
+- `guard/` — Build Protection: pure `CommandNormalizer` / `ExportPolicy` / `ChannelPolicy`, the `ExportCommandGuard` / `ModGuard` listeners, `GuardPermissions` (LuckPerms + Bukkit impls), `AuditLog`
+- `command/` — `/gq` executor + tab completer, plus `/light`, `/items`, `/world` (pure parsing helpers are unit-tested)
+- `gui/` — the 54-slot control panel and every sub-menu (light, op-items, reach, world manager, build protection) on the shared `Guis` layout
 - `util/` — `Messages`, `Items`
 
 **EN:** Full design: [`docs/superpowers/specs/2026-06-21-goldeniq-builder-tool-design.md`](docs/superpowers/specs/2026-06-21-goldeniq-builder-tool-design.md).
