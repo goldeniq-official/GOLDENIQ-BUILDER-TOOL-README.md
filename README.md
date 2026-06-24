@@ -2,8 +2,8 @@
 
 > An official **GOLDENIQ** product — [https://www.goldeniq.xyz/](https://www.goldeniq.xyz/)
 >
-> **Version 0.2.5.** Server plugin: **Paper — Minecraft 1.21.11 and newer** (JDK 21).
-> Companion client mod **Hermitkh** (same version 0.2.5): **Fabric — Minecraft 26.1.2 and newer** (JDK 25 to build).
+> **Version 0.2.7.** Server plugin: **Paper — Minecraft 1.21.11 and newer** (JDK 21).
+> Companion client mod **Hermitkh** (same version 0.2.7): **Fabric — Minecraft 26.1.2 and newer** (JDK 25 to build).
 > The plugin and the mod always ship at the **same version number**; pair matching versions.
 
 **EN:** A Paper 1.21 plugin for **builder servers**. It gives fast, reliable **per-world** control over
@@ -25,6 +25,12 @@ and a per-world **gamemode policy** that fixes the classic "left in Creative, re
 - 🎯 **Builder Reach** — change your arm length so you can place/break blocks from farther away.
 - 💡 **Light Levels** — grab a light block at any brightness (0-15) for lighting interiors.
 - 🧰 **Operator Items** — get the blocks that normally need `/give` (command blocks, barriers…).
+- 🪄 **Replace & Paint-Fill wands** — `/rp` swaps one block on click; `/pf` flood-fills a whole
+  connected same-type mass. Routes through WorldEdit/FAWE when present (so `//undo` works). Coral and
+  other waterloggable blocks are placed **dry** — no water comes along.
+- 🆔 **Show Item ID** — toggle on and the held block's **legacy numeric ID** (the same one WorldEdit/FAWE
+  use: stone = `1`, grass block = `2`) shows on your action bar, updating as you switch hotbar slots.
+  No more hitting a block to read its ID. Blocks with no legacy ID fall back to the namespaced key.
 
 **ខ្មែរ — បន្ថែមលើ toggle តាម world, plugin នេះក៏មាន "ប្រអប់ឧបករណ៍" ពេញលេញសម្រាប់អ្នកសាងសង់ផងដែរ៖**
 
@@ -33,6 +39,11 @@ and a per-world **gamemode policy** that fixes the classic "left in Creative, re
 - 🎯 **Builder Reach** — ប្ដូរប្រវែងដៃ ដើម្បីដាក់/កាច់ block ពីចម្ងាយឆ្ងាយជាងធម្មតា។
 - 💡 **Light Levels** — យក light block តាមកម្រិតពន្លឺ (0-15) សម្រាប់បំភ្លឺខាងក្នុងសំណង់។
 - 🧰 **Operator Items** — យក block ដែលធម្មតាត្រូវការ `/give` (command block, barrier ។ល។)។
+- 🪄 **Replace & Paint-Fill wands** — `/rp` ប្ដូរ block មួយពេលចុច; `/pf` បំពេញ block ប្រភេទដូចគ្នាដែលជាប់គ្នាទាំងមូល។
+  ឆ្លងកាត់ WorldEdit/FAWE ពេលមាន (ដូច្នេះ `//undo` ដំណើរការ)។ Coral និង block ដែលផ្ទុកទឹកបាន ត្រូវដាក់ **ស្ងួត** — គ្មានទឹកមកជាមួយ។
+- 🆔 **Show Item ID** — បើក toggle នោះ **លេខ ID legacy** (ដូចគ្នានឹង WorldEdit/FAWE៖ stone = `1`, grass block = `2`)
+  នៃ block ក្នុងដៃបង្ហាញលើ action bar ហើយ update ពេលប្ដូរ hotbar slot។ លែងចាំបាច់វាយ block ដើម្បីអាន ID ទៀតហើយ។
+  block ដែលគ្មាន legacy ID ត្រឡប់ទៅ namespaced key វិញ។
 
 ---
 
@@ -149,9 +160,11 @@ and a per-world **gamemode policy** that fixes the classic "left in Creative, re
 
 ### `/gq decay [on | off]`
 
-- **EN:** No decay/growth. Leaves never decay, grass/vines/mushrooms don't spread, and crops/blocks
-  don't grow or form — the world stays exactly as built.
-- **ខ្មែរ:** គ្មានការរលួយ/ដុះ។ ស្លឹកមិនរលួយ, ស្មៅ/វល្លិ៍/ផ្សិតមិនរីក, ដំណាំ/block មិនដុះ — world នៅដដែលដូចសង់។
+- **EN:** No decay/growth. Leaves never decay, grass/vines/mushrooms don't spread, crops/blocks don't
+  grow or form, and **living coral never dries out into dead coral** — so coral placed without water
+  (e.g. by the `/rp` and `/pf` wands) stays alive. The world stays exactly as built.
+- **ខ្មែរ:** គ្មានការរលួយ/ដុះ។ ស្លឹកមិនរលួយ, ស្មៅ/វល្លិ៍/ផ្សិតមិនរីក, ដំណាំ/block មិនដុះ, ហើយ **coral រស់មិនស្ងួតទៅជា coral ងាប់**
+  — ដូច្នេះ coral ដែលដាក់ដោយគ្មានទឹក (ឧ. ដោយ wand `/rp` និង `/pf`) នៅរស់។ world នៅដដែលដូចសង់។
 
 ### `/gq nodamage [on | off]`
 
@@ -183,6 +196,19 @@ and a per-world **gamemode policy** that fixes the classic "left in Creative, re
 - **EN:** Toggles permanent night vision for **yourself** — great for building in caves or interiors
   without placing light. (Session-scoped.)
 - **ខ្មែរ:** បើក/បិទ night vision អចិន្ត្រៃយ៍សម្រាប់ **ខ្លួនអ្នក** — ល្អសម្រាប់សង់ក្នុងរូងភ្នំ ឬខាងក្នុង ដោយមិនចាំបាច់ដាក់ភ្លើង។
+
+### `/gq id`
+
+- **EN:** Toggles **Show Item ID** for **yourself**. While on, the **legacy numeric ID** of the block in
+  your main hand — the same one **WorldEdit / FastAsyncWorldEdit** use (stone = `1`, grass block = `2`,
+  red wool = `35:14`) — is shown on your action bar and updates the instant you switch hotbar slots; an
+  empty hand shows nothing. A block with no legacy ID (most 1.13+ blocks), or a server without WE/FAWE,
+  falls back to the namespaced key (e.g. `minecraft:mangrove_roots`). Alias: `/gq itemid`.
+  (Session-scoped; Bedrock players see it through Geyser.)
+- **ខ្មែរ:** បើក/បិទ **Show Item ID** សម្រាប់ **ខ្លួនអ្នក**។ ពេលបើក **លេខ ID legacy** នៃ block ក្នុងដៃ — ដូចគ្នានឹង
+  **WorldEdit / FastAsyncWorldEdit** (stone = `1`, grass block = `2`, red wool = `35:14`) — បង្ហាញលើ action bar
+  ហើយ update ភ្លាមៗពេលប្ដូរ hotbar slot; ដៃទទេមិនបង្ហាញអ្វី។ block ដែលគ្មាន legacy ID (block 1.13+ ភាគច្រើន) ឬ server
+  គ្មាន WE/FAWE ត្រឡប់ទៅ namespaced key វិញ (ឧ. `minecraft:mangrove_roots`)។ ឈ្មោះក្រៅ៖ `/gq itemid`។
 
 ### `/gq reach [<number> | reset]`
 
@@ -258,12 +284,27 @@ and a per-world **gamemode policy** that fixes the classic "left in Creative, re
 - **ខ្មែរ:** បើកម៉ឺនុយ **Light Levels** — ចុចកម្រិតមួយ (0-15) ដើម្បីយក light block តាមកម្រិតពន្លឺនោះ។ ល្អសម្រាប់បំភ្លឺខាងក្នុង
   ដោយមើលមិនឃើញ light block។ ត្រូវការ `goldeniq.builder.use`។
 
-### `/items` _(alias `/opitems`)_
+### `/items` _(aliases `/opitems`, `/item`, `/opitem`)_
 
 - **EN:** Opens the **Operator Items** menu — click to receive one of the blocks that normally need
   `/give` (command blocks, barriers, structure/jigsaw blocks, light, etc.). Needs `goldeniq.builder.use`.
 - **ខ្មែរ:** បើកម៉ឺនុយ **Operator Items** — ចុចដើម្បីទទួល block ដែលធម្មតាត្រូវការ `/give` (command block, barrier,
   structure/jigsaw block, light ។ល។)។ ត្រូវការ `goldeniq.builder.use`។
+
+### `/rp` _(alias `/replace`)_ &nbsp;·&nbsp; `/pf` _(alias `/paintfill`)_
+
+- **EN:** Arm the block in your hand as a **replace wand**. Hold a block, run the command, then
+  right-click (Bedrock: tap) a block to swap it — `/rp` replaces the **single** block you click, `/pf`
+  flood-fills the **whole connected mass of the same type** (a 3D paint bucket). Drop the wand to disarm.
+  **Creative-only**, and the held block is never consumed. When **WorldEdit / FastAsyncWorldEdit** is
+  installed the edits route through it, so `//undo` / `//redo` work and large `/pf` fills run async.
+  Coral and other waterloggable blocks are placed **dry** — the water never comes along (pair with
+  `/gq decay` to keep living coral alive). `/pf`'s fill size is capped by `rp.flood-max-blocks` in config.
+- **ខ្មែរ:** កំណត់ block ក្នុងដៃជា **wand ប្ដូរ block**។ កាន់ block, វាយ command, រួចចុចស្ដាំ (Bedrock: tap) លើ block
+  ដើម្បីប្ដូរ — `/rp` ប្ដូរ block **តែមួយ** ដែលអ្នកចុច, `/pf` បំពេញ **block ប្រភេទដូចគ្នាដែលជាប់គ្នាទាំងមូល** (ដូច paint bucket 3D)។
+  ទម្លាក់ wand ដើម្បីបិទ។ **Creative ប៉ុណ្ណោះ**, ហើយ block ក្នុងដៃមិនអស់ឡើយ។ ពេលមាន **WorldEdit / FastAsyncWorldEdit**
+  ការកែឆ្លងកាត់វា ដូច្នេះ `//undo` / `//redo` ដំណើរការ ហើយ `/pf` ធំ run async។ Coral និង block ផ្ទុកទឹក ត្រូវដាក់ **ស្ងួត** —
+  គ្មានទឹកមកជាមួយ (ផ្គូផ្គង `/gq decay` ដើម្បីឱ្យ coral រស់នៅរស់)។ ទំហំបំពេញ `/pf` កំណត់ត្រឹម `rp.flood-max-blocks` ក្នុង config។
 
 ---
 
@@ -402,7 +443,8 @@ grant `goldeniq.guard.export` ឱ្យ builder ដែលទុកចិត្�
 - Each toggle button **glows** when ON. **Left-click** to flip it — the change applies instantly and is saved.
 - **Gamemode Policy** button: click to cycle REMEMBER → FORCED(SURVIVAL→CREATIVE→ADVENTURE→SPECTATOR).
 - **Gamemode Lock** button (next to it): click to lock/unlock manual changes (used when FORCED).
-- **Clear Mobs**, **Night Vision**, **Status** are action buttons.
+- **Clear Mobs**, **Night Vision**, **Show Item ID**, **Status** are action buttons (the bottom row is an
+  evenly-spaced quad: Night Vision · Show Item ID · Clear Mobs · Close).
 - **Operator Items**, **Light Levels**, **Builder Reach** and **World Manager** open their own sub-menus
   (the same as `/items`, `/light`, `/gq reach` and `/world`).
 - **Build Protection** opens the export/mod guard menu — shown only to `goldeniq.guard.admin` holders.
@@ -418,7 +460,8 @@ grant `goldeniq.guard.export` ឱ្យ builder ដែលទុកចិត្�
 - ប៊ូតុង toggle នីមួយៗ **ភ្លឺ** ពេល ON។ **ចុចឆ្វេង** ដើម្បីប្ដូរ — ការផ្លាស់ប្ដូរអនុវត្តភ្លាមៗ និងត្រូវបានរក្សាទុក។
 - ប៊ូតុង **Gamemode Policy**៖ ចុចដើម្បីប្ដូរវដ្ដ REMEMBER → FORCED(SURVIVAL→CREATIVE→ADVENTURE→SPECTATOR)។
 - ប៊ូតុង **Gamemode Lock** (ក្បែរវា)៖ ចុចដើម្បី lock/unlock ការប្ដូរដោយដៃ (ប្រើពេល FORCED)។
-- **Clear Mobs**, **Night Vision**, **Status** ជាប៊ូតុងសកម្មភាព។
+- **Clear Mobs**, **Night Vision**, **Show Item ID**, **Status** ជាប៊ូតុងសកម្មភាព (ជួរក្រោមជា quad ស្មើគ្នា៖
+  Night Vision · Show Item ID · Clear Mobs · Close)។
 - **Operator Items**, **Light Levels**, **Builder Reach** និង **World Manager** បើកម៉ឺនុយរងរៀងៗខ្លួន
   (ដូចគ្នានឹង `/items`, `/light`, `/gq reach` និង `/world`)។
 - **Build Protection** បើកម៉ឺនុយ guard (export/mod) — បង្ហាញតែអ្នកមាន `goldeniq.guard.admin`។
@@ -493,6 +536,9 @@ reach: # Builder reach (arm length), per-player
   enabled: true # master switch for the whole feature
   max-value: 64 # admin cap (vanilla hard max 64); higher requests are clamped
 
+rp: # /rp + /pf replace wands (Creative; route through WorldEdit/FAWE when present, so //undo works)
+  flood-max-blocks: 100000 # cap on a single /pf fill (0 = unlimited; only safe with FAWE installed)
+
 guard: # Build Protection (see section above)
   export:
     enabled: true
@@ -548,7 +594,7 @@ mvn clean package
 - `feature/` — one service/listener per feature (hot-path listeners do an O(1) cache lookup and return early); also reach control
 - `world/` — World Manager: `MultiverseBridge` (the only class touching Multiverse-Core), `WorldSpec`, `WorldPreset`, `ManagedWorldStore` and the result records
 - `guard/` — Build Protection: pure `CommandNormalizer` / `ExportPolicy` / `ChannelPolicy`, the `ExportCommandGuard` / `ModGuard` listeners, `GuardPermissions` (LuckPerms + Bukkit impls), `AuditLog`
-- `command/` — `/gq` executor + tab completer, plus `/light`, `/items`, `/world` (pure parsing helpers are unit-tested)
+- `command/` — `/gq` executor + tab completer, plus `/light`, `/items`, `/world`, `/rp`, `/pf` (pure parsing helpers are unit-tested)
 - `gui/` — the 54-slot control panel and every sub-menu (light, op-items, reach, world manager, build protection) on the shared `Guis` layout
 - `util/` — `Messages`, `Items`
 
